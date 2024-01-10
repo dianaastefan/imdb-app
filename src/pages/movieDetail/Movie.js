@@ -115,26 +115,31 @@ const Movie = () => {
                 </>
 {/* nu mergeeee */}
 <Swiper
-  spaceBetween={10}
+  spaceBetween={50}
+  slidesPerView={5}
   navigation={true}
    modules={[Navigation]}
 >
   {cast && cast.cast
-    ? cast.cast.map((actor) => (
-        <SwiperSlide key={actor.id} className={styles.swiper}>
-          {actor.profile_path && (
-            <div className={styles.castImg}>
-              <img
-                src={`https://image.tmdb.org/t/p/original${actor.profile_path}`}
-                alt={`${actor.name}'s profile`}
-              />
-            </div>
-          )}
-
-          <p className={styles.castName}>{actor.name}</p>
-          <p className={styles.castName}>AS {actor.character}</p>
-        </SwiperSlide>
-      ))
+    ? cast.cast.map((actor) => {
+        console.log(actor)
+       return (
+        
+            <SwiperSlide key={actor.id} className={styles.swiper}>
+              {actor.profile_path && (
+                <div className={styles.castImg}>
+                  <img
+                    src={`https://image.tmdb.org/t/p/original${actor.profile_path}`}
+                    alt={`${actor.name}'s profile`}
+                  />
+                </div>
+              )}
+    
+              <p className={styles.castName}>{actor.name}</p>
+              <p className={styles.castName}>AS {actor.character}</p>
+            </SwiperSlide>
+          )
+    })
     : ''}
 </Swiper>
 
