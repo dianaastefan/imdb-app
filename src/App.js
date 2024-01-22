@@ -5,6 +5,8 @@ import Home from './pages/home/Home';
 import MovieList from './components/movieList/movieList';
 import Movie from './pages/movieDetail/Movie.js';
 
+
+
 function App() {
   return (
     <div className="App">

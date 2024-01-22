@@ -4,7 +4,8 @@ import styles from './Card.module.css'
 import { Link } from "react-router-dom"
 
 const Cards = ({movie}) => {
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
+    const API_IMG_BASE=process.env.REACT_APP_IMAGE_BASE_URL
 
     useEffect(() => {
         setTimeout(() => {
@@ -24,7 +25,7 @@ const Cards = ({movie}) => {
         :
         <Link to={`/movie/${movie.id}`} style={{textDecoration:"none", color:"white"}}>
             <div className={styles.cards}>
-                <img className={styles.cardsImg}src={`https://image.tmdb.org/t/p/original${movie?movie.poster_path:""}`} alt='img'/>
+                <img className={styles.cardsImg}src={`${API_IMG_BASE}${movie?movie.poster_path:""}`} alt='img'/>
                 <div className={styles.cardsOverlay}>
                     <div className={styles.cardTitle}>{movie?movie.original_title:""}</div>
                     <div className={styles.cardRuntime}>

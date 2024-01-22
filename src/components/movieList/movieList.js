@@ -1,33 +1,27 @@
-import React, {useEffect,useState} from 'react'
-import styles from './movieList.module.css'
-import { useParams } from "react-router-dom"
-import Cards from '../card/Card'
-// import Pagination from './Pagination'
+import React, {useEffect,useState, useCallback} from 'react';
+import styles from './movieList.module.css';
+import { useParams } from "react-router-dom";
+import { fetchData } from '../../utils/Fetcher';
+import Cards from '../card/Card';
 
 const MovieList = () => {
+
     const [movieList, setMovieList] = useState([])
     const {type} = useParams();
 
-    // const [currentPage, setCurrentPage]=useState(1);
-    // const [postsPerPage]=useState(8);
-  
-    //   const lastPostIndex= currentPage *postsPerPage;
-    //   const firstPostIndex= lastPostIndex -postsPerPage;
-    //  const currentPosts= movieList.slice(firstPostIndex,lastPostIndex);
-
-    useEffect(() => {
-        getData()
-    },[])
-
-    useEffect(() => {
-        getData()
-    }, [type])
-
-    const getData = () => {
-        fetch(`https://api.themoviedb.org/3/movie/${type ? type : "popular"}?api_key=64569705d85560116922c8b37f5316fa&language=en-US`)
-        .then(res => res.json())
-        .then(data => setMovieList(data.results))
+      const getData = useCallback(async () => {
+        try {
+        const data = await fetchData(type ? type : 'popular');
+        setMovieList(data.results);
+      } catch (error) {
+      
+      console.error('Error fetching data:', error.message);
     }
+  }, [type]);
+
+      useEffect(() => {
+        getData();
+      }, [getData]);
 
     return (
         <div className={styles.movieList}>
@@ -35,15 +29,10 @@ const MovieList = () => {
             <div className={styles.listCards}>
                 {
                     movieList.map(movie => (
-                        <Cards movie={movie} />
+                        <Cards key={movie.id} movie={movie} />
                     ))
                 }
             </div>
-            {/* <Pagination 
-      totalPosts = {movieList.length}  
-      postsPerPage ={postsPerPage} 
-      setCurrentPage={setCurrentPage}
-      currentPage={currentPage}/> */}
         </div>
     )
 }
